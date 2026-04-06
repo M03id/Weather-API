@@ -117,3 +117,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+from decouple import config
+WEATHER_API_KEY = config('WEATHER_API_KEY')
+REDIS_URL = config('REDIS_URL')

@@ -16,3 +16,5 @@ staticfiles/
 
 # os 
 .DS_Store
+
+.env
