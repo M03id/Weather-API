@@ -2,10 +2,17 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.conf import settings
 from django.core.cache import cache
+from django_ratelimit.decorators import ratelimit
+from django.http import JsonResponse
 import requests
 
+@ratelimit(key='ip', rate='5/m', block=False)
 @api_view(['GET'])
 def get_weather(request):
+
+    if getattr(request, 'limited', False):
+        return JsonResponse({"error": "Too many requests. Please try again later."}, status=429)
+
     city = request.GET.get('city')
     
     if not city:
